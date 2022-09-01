@@ -6190,6 +6190,10 @@ namespace bgfx { namespace d3d11
 						||  current.m_samplerFlags != bind.m_samplerFlags
 						||  programChanged)
 						{
+							m_textureStage.m_srv[stage] = NULL;
+							m_textureStage.m_sampler[stage] = NULL;
+							m_textureStage.m_uav[stage] = NULL;
+
 							if (kInvalidHandle != bind.m_idx)
 							{
 								switch (bind.m_type)
@@ -6227,17 +6231,9 @@ namespace bgfx { namespace d3d11
 											: m_vertexBuffers[bind.m_idx]
 											;
 										m_textureStage.m_srv[stage] = buffer.m_srv;
-										m_textureStage.m_sampler[stage] = NULL;
-										m_textureStage.m_uav[stage]     = NULL;
 									}
 									break;
 								}
-							}
-							else
-							{
-								m_textureStage.m_srv[stage]     = NULL;
-								m_textureStage.m_sampler[stage] = NULL;
-								m_textureStage.m_uav[stage]     = NULL;
 							}
 
 							++changes;
